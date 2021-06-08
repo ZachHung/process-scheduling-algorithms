@@ -26,9 +26,8 @@ bool compare2(process p1, process p2)
 }
 
 int main() {
-
     int n;
-    int tq;
+    int qt;
     struct process p[100];
     float avg_turnaround_time;
     float avg_waiting_time;
@@ -46,18 +45,14 @@ int main() {
 
     cout<<"Enter the number of processes: ";
     cin>>n;
-    cout<<"Enter time quantum: ";
-    cin>>tq;
+    cout<<"Enter quantum time: ";
+    cin>>qt;
 
-    for(int i = 0; i < n; i++) {
-        cout<<"Enter arrival time of process "<<i+1<<": ";
-        cin>>p[i].arrival_time;
-        cout<<"Enter burst time of process "<<i+1<<": ";
-        cin>>p[i].burst_time;
+    for (int i = 0; i < n; i++) {
+		cout << "Enter process name, arrival time and burst time: ";
+		cin >> p[i].pid >> p[i].arrival_time >> p[i].burst_time;
         burst_remaining[i] = p[i].burst_time;
-        p[i].pid = i+1;
-        cout<<endl;
-    }
+	}
 
     sort(p,p+n,compare1);
 
@@ -65,23 +60,21 @@ int main() {
     int current_time = 0;
     q.push(0);
     int completed = 0;
-    int mark[100];
-    memset(mark,0,sizeof(mark));
+    int mark[100]={0};
     mark[0] = 1;
-
+    cout<<"-------Gantt Chart--------\n";
     while(completed != n) {
         idx = q.front();
+        cout<<'['<<current_time<<']'<<"__"<<p[idx].pid<<"__";
         q.pop();
-
         if(burst_remaining[idx] == p[idx].burst_time) {
             p[idx].start_time = max(current_time,p[idx].arrival_time);
             total_idle_time += p[idx].start_time - current_time;
             current_time = p[idx].start_time;
         }
-
-        if(burst_remaining[idx]-tq > 0) {
-            burst_remaining[idx] -= tq;
-            current_time += tq;
+        if(burst_remaining[idx]-qt > 0) {
+            burst_remaining[idx] -= qt;
+            current_time += qt;
         }
         else {
             current_time += burst_remaining[idx];
@@ -117,47 +110,20 @@ int main() {
                 }
             }
         }
-
-
     }
+    cout<<'['<<current_time<<']';
+    sort(p, p + n, compare2);
+	cout << "\n\nName\t" << "Arrive\t" << "Burst\t" << "Start\t" << "Complete " << "  TurnAround\t" << "Wait\t"<<"Reponse\n";
 
-    avg_turnaround_time = (float) total_turnaround_time / n;
-    avg_waiting_time = (float) total_waiting_time / n;
-    avg_response_time = (float) total_response_time / n;
-    cpu_utilisation = ((p[n-1].completion_time - total_idle_time) / (float) p[n-1].completion_time)*100;
-    throughput = float(n) / (p[n-1].completion_time - p[0].arrival_time);
-
-    sort(p,p+n,compare2);
-
-    cout<<endl;
-    cout<<"#P\t"<<"AT\t"<<"BT\t"<<"ST\t"<<"CT\t"<<"TAT\t"<<"WT\t"<<"RT\t"<<"\n"<<endl;
-
-    for(int i = 0; i < n; i++) {
-        cout<<p[i].pid<<"\t"<<p[i].arrival_time<<"\t"<<p[i].burst_time<<"\t"<<p[i].start_time<<"\t"<<p[i].completion_time<<"\t"<<p[i].turnaround_time<<"\t"<<p[i].waiting_time<<"\t"<<p[i].response_time<<"\t"<<"\n"<<endl;
-    }
-    cout<<"Average Turnaround Time = "<<avg_turnaround_time<<endl;
-    cout<<"Average Waiting Time = "<<avg_waiting_time<<endl;
-    cout<<"Average Response Time = "<<avg_response_time<<endl;
-    cout<<"CPU Utilization = "<<cpu_utilisation<<"%"<<endl;
-    cout<<"Throughput = "<<throughput<<" process/unit time"<<endl;
-
-
+	for (int i = 0; i < n; i++) {
+		total_turnaround_time += p[i].turnaround_time;
+		total_waiting_time += p[i].waiting_time;
+		cout << p[i].pid << "\t" << p[i].arrival_time << "\t" << p[i].burst_time << "\t" << p[i].start_time << "\t" << p[i].completion_time << "\t\t" << p[i].turnaround_time << "\t" << p[i].waiting_time << "\t" << p[i].response_time << endl;
+	}
+    
+	avg_turnaround_time = (float)total_turnaround_time / n;
+	avg_waiting_time = (float)total_waiting_time / n;
+	cout << "Average Turnaround Time = " << avg_turnaround_time << endl;
+	cout << "Average Waiting Time = " << avg_waiting_time << endl;
+	return 0;
 }
-
-/*
-
-AT - Arrival Time of the process
-BT - Burst time of the process
-ST - Start time of the process
-CT - Completion time of the process
-TAT - Turnaround time of the process
-WT - Waiting time of the process
-RT - Response time of the process
-
-Formulas used:
-
-TAT = CT - AT
-WT = TAT - BT
-RT = ST - AT
-
-*/
