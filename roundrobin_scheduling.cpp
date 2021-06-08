@@ -58,7 +58,7 @@ int main() {
     int completed = 0;
     int mark[100]={0};
     mark[0] = 1;
-    cout<<"-------Gantt Chart--------\n";
+    cout<<"\n-------Gantt Chart--------\n";
     while(completed != n) {
         idx = q.front();
         cout<<'['<<current_time<<']'<<"__"<<p[idx].pid<<"__";
