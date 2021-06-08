@@ -80,7 +80,7 @@ int main() {
         }  
     }
 sort(p, p + n, compareProc);
-	cout << "\n\nName\t" << "Arrive\t" << "Burst\t" << "Start\t" << "Complete " << "  TurnAround\t" << "Wait\t"<<"Reponse\n";
+	cout << "\n\nName\t" << "Arrive\t" << "Burst\t" << "Start\t" << "Complete " << "  TurnAround\t" << "Wait\t"<<"Response\n";
 	for (int i = 0; i < n; i++) {
 		total_turnaround_time += p[i].turnaround_time;
 		total_waiting_time += p[i].waiting_time;
