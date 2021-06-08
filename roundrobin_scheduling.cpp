@@ -31,13 +31,9 @@ int main() {
     struct process p[100];
     float avg_turnaround_time;
     float avg_waiting_time;
-    float avg_response_time;
     float cpu_utilisation;
     int total_turnaround_time = 0;
     int total_waiting_time = 0;
-    int total_response_time = 0;
-    int total_idle_time = 0;
-    float throughput;
     int burst_remaining[100];
     int idx;
 
@@ -69,7 +65,6 @@ int main() {
         q.pop();
         if(burst_remaining[idx] == p[idx].burst_time) {
             p[idx].start_time = max(current_time,p[idx].arrival_time);
-            total_idle_time += p[idx].start_time - current_time;
             current_time = p[idx].start_time;
         }
         if(burst_remaining[idx]-qt > 0) {
@@ -86,9 +81,6 @@ int main() {
             p[idx].waiting_time = p[idx].turnaround_time - p[idx].burst_time;
             p[idx].response_time = p[idx].start_time - p[idx].arrival_time;
 
-            total_turnaround_time += p[idx].turnaround_time;
-            total_waiting_time += p[idx].waiting_time;
-            total_response_time += p[idx].response_time;
         }
 
         for(int i = 1; i < n; i++) {
@@ -120,7 +112,7 @@ int main() {
 		total_waiting_time += p[i].waiting_time;
 		cout << p[i].pid << "\t" << p[i].arrival_time << "\t" << p[i].burst_time << "\t" << p[i].start_time << "\t" << p[i].completion_time << "\t\t" << p[i].turnaround_time << "\t" << p[i].waiting_time << "\t" << p[i].response_time << endl;
 	}
-    
+
 	avg_turnaround_time = (float)total_turnaround_time / n;
 	avg_waiting_time = (float)total_waiting_time / n;
 	cout << "Average Turnaround Time = " << avg_turnaround_time << endl;
