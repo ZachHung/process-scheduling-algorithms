@@ -101,7 +101,7 @@ int main() {
                 }
             }
         }
-    };
+    }
     cout<<'['<<current_time<<']';
     sort(p, p + n, compare2);
 	cout << "\n\nName\t" << "Arrive\t" << "Burst\t" << "Start\t" << "Complete " << "  TurnAround\t" << "Wait\t"<<"Reponse\n";
