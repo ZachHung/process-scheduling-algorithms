@@ -76,7 +76,7 @@ int main() {
             }
         }
         else {
-             current_time++;
+        current_time++;
         }  
     }
 sort(p, p + n, compareProc);
