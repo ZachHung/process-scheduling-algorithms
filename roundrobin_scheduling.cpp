@@ -31,7 +31,6 @@ int main() {
     struct process p[100];
     float avg_turnaround_time;
     float avg_waiting_time;
-    float cpu_utilisation;
     int total_turnaround_time = 0;
     int total_waiting_time = 0;
     int burst_remaining[100];
