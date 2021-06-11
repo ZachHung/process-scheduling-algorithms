@@ -57,7 +57,7 @@ int main() {
     int completed = 0;
     int mark[100]={0};
     mark[0] = 1;
-    cout<<"\n-------Gantt Chart--------\n";
+    cout<<"\n-------GANTT CHART--------\n";
     while(completed != n) {
         idx = q.front();
         cout<<'['<<current_time<<']'<<"__"<<p[idx].pid<<"__";
@@ -88,7 +88,7 @@ int main() {
                 mark[i] = 1;
             }
         }
-        if(burst_remaining[idx] > 0) {
+        if(burst_remaining[idx] > 0) {  
             q.push(idx);
         }
 
@@ -101,7 +101,7 @@ int main() {
                 }
             }
         }
-    }
+    };
     cout<<'['<<current_time<<']';
     sort(p, p + n, compare2);
 	cout << "\n\nName\t" << "Arrive\t" << "Burst\t" << "Start\t" << "Complete " << "  TurnAround\t" << "Wait\t"<<"Reponse\n";
@@ -111,7 +111,7 @@ int main() {
 		total_waiting_time += p[i].waiting_time;
 		cout << p[i].pid << "\t" << p[i].arrival_time << "\t" << p[i].burst_time << "\t" << p[i].start_time << "\t" << p[i].completion_time << "\t\t" << p[i].turnaround_time << "\t" << p[i].waiting_time << "\t" << p[i].response_time << endl;
 	}
-
+    
 	avg_turnaround_time = (float)total_turnaround_time / n;
 	avg_waiting_time = (float)total_waiting_time / n;
 	cout << "Average Turnaround Time = " << avg_turnaround_time << endl;

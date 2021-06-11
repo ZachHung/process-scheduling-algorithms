@@ -77,7 +77,7 @@ int main() {
         }
         else {
         current_time++;
-        }  
+        }   
     }
 sort(p, p + n, compareProc);
 	cout << "\n\nName\t" << "Arrive\t" << "Burst\t" << "Start\t" << "Complete " << "  TurnAround\t" << "Wait\t"<<"Response\n";
